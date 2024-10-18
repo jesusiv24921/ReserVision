@@ -1,25 +1,21 @@
 import os
 import pandas as pd
-import pyodbc
+from sqlalchemy import create_engine
 
-# Dirección de la base de datos y proyecto
-basepath = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(basepath, '..'))
-bd = os.path.join(project_root, 'data', 'input', 'proyecto.accdb')
+# Conexión a PostgreSQL en Heroku
+DATABASE_URL = "postgresql://ua6siia5pprrj4:pcff596760bbde68775ea4a456382c0deed86e209c4ec8d95558c8589cf64a722@ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d16ctrn3e0v21m"
+engine = create_engine(DATABASE_URL)
 
 class CargaDatos:
     """
-    Clase encargada de gestionar la conexión con una base de datos Access y cargar datos de distintas tablas en DataFrames.
+    Clase encargada de gestionar la conexión con una base de datos PostgreSQL y cargar datos de distintas tablas en DataFrames.
     """
 
     def __init__(self) -> None:
         """
-        Constructor de la clase CargaDatos. Configura la cadena de conexión a la base de datos.
+        Constructor de la clase CargaDatos. Configura la conexión a la base de datos PostgreSQL.
         """
-        self.conn_str = (
-            r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};'
-            r'DBQ=' + bd + ';'
-        )
+        self.engine = engine
 
     def carga_function(self, table_name: str) -> pd.DataFrame:
         """
@@ -36,9 +32,13 @@ class CargaDatos:
             DataFrame que contiene los datos de la tabla.
         """
         try:
-            with pyodbc.connect(self.conn_str) as conn:
-                query = f"SELECT * FROM {table_name}"
-                df_total = pd.read_sql(query, conn)
+            query = f"SELECT * FROM {table_name}"
+            df_total = pd.read_sql(query, self.engine)
+            
+            # Convertir la columna 'fecha' a datetime si la tabla es 'pwf' para asegurar comparaciones correctas
+            if table_name == 'pwf' and 'fecha' in df_total.columns:
+                df_total['fecha'] = pd.to_datetime(df_total['fecha'], errors='coerce')
+
         except Exception as e:
             print(f"Error al cargar los datos de la tabla {table_name}: {e}")
             return pd.DataFrame()
@@ -79,4 +79,9 @@ class CargaDatos:
 
 
 
+# cargador = CargaDatos()
 
+# df_controles_diarios = cargador.data_cargar("pwf")
+
+# print("Datos de 'controles_diarios':")
+# print(df_controles_diarios.head())
