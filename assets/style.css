@@ -1,0 +1,30 @@
+/* Cambia el color de fondo de las opciones seleccionadas en el dropdown */
+.Select__multi-value {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Cambia el color del texto en las opciones seleccionadas */
+.Select__multi-value__label {
+    color: black !important;
+}
+
+/* Elimina los botones de eliminación de los valores seleccionados */
+.Select__multi-value__remove {
+    display: none !important;
+}
+
+/* Ajusta la alineación de los valores seleccionados en el dropdown */
+.Select__value-container--has-value {
+    display: block !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+}
+
+/* Ajusta el comportamiento del contenedor de valores seleccionados */
+.Select__multi-value__label {
+    display: block !important;
+    white-space: normal !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}

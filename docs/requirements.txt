@@ -1,0 +1,11 @@
+dash==2.18.1
+dash_auth==2.3.0
+dash_bootstrap_components==1.6.0
+dash_extensions==1.0.18
+dtaidistance==2.3.12
+numpy==2.1.1
+pandas==2.2.3
+plotly==5.23.0
+pyodbc==5.1.0
+app==0.0.1
+my_project==0.2dev
