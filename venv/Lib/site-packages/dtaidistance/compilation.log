@@ -1,0 +1,17 @@
+Compiler type: msvc
+--noopenmp: 0
+--forceopenmp: 0
+--noxpreprocessor: 0
+--forcellvm: 0
+--forcegnugcc: 0
+--forcestatic: 0
+Cython found (during compilation)
+- Version: 3.0.10
+- Locations: <module 'Cython' from 'C:\\Users\\runneradmin\\AppData\\Local\\Temp\\build-env-upz0tq20\\Lib\\site-packages\\Cython\\__init__.py'>
+Numpy found (during compilation):
+- Version: 1.26.4
+- Location: <module 'numpy' from 'C:\\Users\\runneradmin\\AppData\\Local\\Temp\\build-env-upz0tq20\\Lib\\site-packages\\numpy\\__init__.py'>
+WARNING: Cannot check for OpenMP, assuming to be available
+'MSVCCompiler' object has no attribute 'compiler'
+All extensions:
+[<setuptools.extension.Extension('dtaidistance.dtw_cc') at 0x1420b5c4d10>, <setuptools.extension.Extension('dtaidistance.ed_cc') at 0x1420b5c5010>, <setuptools.extension.Extension('dtaidistance.dtw_cc_omp') at 0x1420b5c6f60>, <setuptools.extension.Extension('dtaidistance.dtw_cc_numpy') at 0x1420b5c7290>]
