@@ -25,7 +25,7 @@ def layout_summary():
     """
     Genera el layout para la pestaña de resumen, que incluye:
     - Dropdowns para seleccionar inyectores, ubicación y productores
-    - Gráfico del mapa de relaciones entre patrones e inyectores
+    - Gráfico de comportamiento entre patron y productores
     - Boxplot y una tabla con datos de producción
     - Filtro para rango de fechas
     """
@@ -90,14 +90,14 @@ def layout_summary():
             # Gráfico de Comportamiento Patrón- Productores Asociados
             html.Div(
                 className="container-col",
-                id="mapa-relaciones-container",
+                id="comportamiento-container",
                 children=[
                     html.H4("Comportamiento: Patrón & Productores Asociados"),
                     dcc.Loading(
                         type="circle",
                         children=html.Div(
                             dcc.Graph(
-                                id="mapa-relaciones-graph",
+                                id="comportamiento-graph",
                                 config={
                                     'displayModeBar': True,
                                     'modeBarButtonsToRemove': [
@@ -204,7 +204,7 @@ def update_productor_dropdown(selected_inyector, selected_ubicacion):
 
 
 @app.callback(
-    [Output("mapa-relaciones-graph", "figure"), Output("qo-data-store", "data")],
+    [Output("comportamiento-graph", "figure"), Output("qo-data-store", "data")],
     [Input("dataset-dropdown-inyector_2", "value"),
      Input("dataset-dropdown-productor", "value"),
      Input("ubicacion-dropdown", "value")],
@@ -212,7 +212,7 @@ def update_productor_dropdown(selected_inyector, selected_ubicacion):
 )
 def update_patron_rel(selected_inyectores, selected_productores, selected_ubicacion):
     """
-    Actualiza el gráfico del mapa de relaciones y almacena los datos de Qo en el Store.
+    Actualiza el gráficocomportamiento patron- productores y almacena los datos de Qo en el Store.
 
     Args:
         selected_inyectores (list): Lista de inyectores seleccionados en el dropdown.
@@ -220,17 +220,17 @@ def update_patron_rel(selected_inyectores, selected_productores, selected_ubicac
         selected_ubicacion (str): Ubicación seleccionada (PL, SL o Ambos).
 
     Returns:
-        tuple: Figura actualizada para el gráfico del mapa de relaciones y datos actualizados de Qo.
+        tuple: Figura actualizada para el gráfico de comportamiento patrón-productores de relaciones y datos actualizados de Qo.
     """
     # Llamar a la función auxiliar `update_patron` que realiza la lógica principal
     # y pasa los datos necesarios.
-    figura_mapa_relaciones, qo_data = update_patron(
+    figura_comportamiento, qo_data = update_patron(
         selected_inyectores, selected_productores, selected_ubicacion,
         data_relacion, mes, pwf, inyeccion_diaria
     )
     
     # Devolver la figura actualizada y los datos de Qo al Store
-    return figura_mapa_relaciones, qo_data
+    return figura_comportamiento, qo_data
 
 
 @app.callback(
