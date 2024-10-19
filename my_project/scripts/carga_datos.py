@@ -37,7 +37,7 @@ class CargaDatos:
             
             # Convertir la columna 'fecha' a datetime si la tabla es 'pwf' para asegurar comparaciones correctas
             if table_name == 'pwf' and 'fecha' in df_total.columns:
-                df_total['fecha'] = pd.to_datetime(df_total['fecha'], errors='coerce')
+                df_total['fecha'] = pd.to_datetime(df_total['fecha'], format='%d/%m/%Y %H:%M:%S')
 
         except Exception as e:
             print(f"Error al cargar los datos de la tabla {table_name}: {e}")
@@ -85,3 +85,4 @@ class CargaDatos:
 
 # print("Datos de 'controles_diarios':")
 # print(df_controles_diarios.head())
+# print(df_controles_diarios['fecha'].max())
