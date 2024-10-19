@@ -610,6 +610,10 @@ def create_six_graph(selected_productores, controles_diarios, selected_date, dat
     promedio_skin = merge_final['s'].mean()
     promedio_kh = merge_final['kh'].mean()
 
+    # Definir los valores mínimos para el eje Y
+    ip_min = merge_final['s'].min()
+    y0 = merge_final['s'].min() * 0.5 if ip_min < 0 else merge_final['s'].min() * 0.5
+
     # Crear el gráfico de dispersión con color basado en 'tvd_bott_perf'
     fig = px.scatter(
         merge_final,
@@ -625,11 +629,11 @@ def create_six_graph(selected_productores, controles_diarios, selected_date, dat
     fig.update_traces(marker=dict(size=12, line=dict(width=0)), textposition='bottom center', textfont=dict(size=13))
 
     # Añadir las líneas de promedio
-    fig.add_shape(type='line', x0=promedio_kh, x1=promedio_kh, y0=merge_final['s'].min() * 0.5, y1=merge_final['s'].max() * 1.5, line=dict(color='black', width=1))
+    fig.add_shape(type='line', x0=promedio_kh, x1=promedio_kh, y0=ip_min + y0, y1=merge_final['s'].max() * 1.5, line=dict(color='black', width=1))
     fig.add_shape(type='line', x0=0, x1=merge_final['kh'].max() * 1.15, y0=promedio_skin, y1=promedio_skin, line=dict(color='black', width=1))
 
     # Dibujar un rectángulo que encierre todos los datos y líneas de promedio
-    fig.add_shape(type='rect', x0=0, x1=merge_final['kh'].max() * 1.15, y0=merge_final['s'].min() * 0.5, y1=merge_final['s'].max() * 1.5, line=dict(color='black', width=1))
+    fig.add_shape(type='rect', x0=0, x1=merge_final['kh'].max() * 1.15, y0=ip_min+y0, y1=merge_final['s'].max() * 1.5, line=dict(color='black', width=1))
 
     # Configuración del layout del gráfico
     fig.update_layout(
@@ -649,7 +653,10 @@ def create_six_graph(selected_productores, controles_diarios, selected_date, dat
     fig.add_annotation(x=promedio_kh, y=merge_final['s'].max() * 1.5, text=f"{promedio_kh:.0f}", showarrow=False, yshift=10, font=dict(color="blue", size=14))
     fig.add_annotation(x=merge_final['kh'].max() * 1.15, y=promedio_skin, text=f"{promedio_skin:.1f}", showarrow=False, xshift=12, font=dict(color="green", size=14))
 
+
+    
     return fig
+
 
 
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -677,13 +684,13 @@ def create_qo_ql_graph(filtered_data):
 
     # Agregar la traza para Qo en el eje Y primario
     fig.add_trace(
-        go.Scatter(x=filtered_data['FECHA'], y=filtered_data['qo'], mode='lines', name='Qo (Caudal de Aceite)', line=dict(color='green')),
+        go.Scatter(x=filtered_data['FECHA'], y=filtered_data['qo'], mode='markers', name='Qo (BOPD)', line=dict(color='green')),
         secondary_y=False
     )
 
     # Agregar la traza para Ql en el eje Y secundario
     fig.add_trace(
-        go.Scatter(x=filtered_data['FECHA'], y=filtered_data['ql'], mode='lines', name='Ql (Caudal de Líquidos)', line=dict(color='black')),
+        go.Scatter(x=filtered_data['FECHA'], y=filtered_data['ql'], mode='markers', name='Ql (BLPD)', line=dict(color='black')),
         secondary_y=True
     )
 
