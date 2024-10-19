@@ -26,7 +26,7 @@ def layout_summary():
     Genera el layout para la pestaña de resumen, que incluye:
     - Dropdowns para seleccionar inyectores, ubicación y productores
     - Gráfico del mapa de relaciones entre patrones e inyectores
-    - Histogramas y una tabla con datos de producción
+    - Boxplot y una tabla con datos de producción
     - Filtro para rango de fechas
     """
     return html.Div(
@@ -87,7 +87,7 @@ def layout_summary():
                 ]
             ),
 
-            # Gráfico del Mapa de Relaciones entre patrones e inyectores
+            # Gráfico de Comportamiento Patrón- Productores Asociados
             html.Div(
                 className="container-col",
                 id="mapa-relaciones-container",
@@ -114,16 +114,16 @@ def layout_summary():
                 style={"marginBottom": "30px"},
             ),
 
-            # Sección de Histogramas y Tabla de Producción
+            # Sección de Boxplot y Tabla de Producción
             html.Div(
                 className="container-col",
-                id="histogramas-container",
+                id="boxplot-container",
                 children=[
                     html.H4(""),
                     dcc.Loading(
                         type="circle",
                         children=[
-                            dcc.Graph(id="histograma-graph1"),  # Primer gráfico: Boxplot
+                            dcc.Graph(id="boxplot-graph1"),  # Primer gráfico: Boxplot
 
                             # Filtro de rango de fechas y botón de descarga
                             html.Div(
@@ -234,15 +234,15 @@ def update_patron_rel(selected_inyectores, selected_productores, selected_ubicac
 
 
 @app.callback(
-    [Output("histograma-graph1", "figure"), Output("qo-data-table", "data")],
+    [Output("boxplot-graph1", "figure"), Output("qo-data-table", "data")],
     [Input("qo-data-store", "data"),
      Input('date-range-picker', 'start_date'),
      Input('date-range-picker', 'end_date')],
     prevent_initial_call=True
 )
-def update_histograma1_callback(qo_data, start_date, end_date):
+def update_boxplot_callback(qo_data, start_date, end_date):
     """
-    Actualiza el gráfico del histograma y la tabla de datos de tasas de aceite (Qo) 
+    Actualiza el gráfico del boxplot y la tabla de datos de tasas de aceite (Qo) 
     basado en los datos almacenados y el rango de fechas seleccionado.
 
     Args:
@@ -251,7 +251,7 @@ def update_histograma1_callback(qo_data, start_date, end_date):
         end_date (str): La fecha de fin seleccionada en el selector de fechas.
 
     Returns:
-        tuple: Figura del histograma actualizada y datos para la tabla.
+        tuple: Figura del boxplot actualizada y datos para la tabla.
     """
     # Verificar si los datos de Qo están disponibles
     if not qo_data:
