@@ -38,7 +38,6 @@ def layout_summary():
             dcc.Store(id='store-dropdown-inyector'),
             dcc.Store(id='store-dropdown-productor'),
             dcc.Store(id='store-dropdown-ubicacion'),
-            dcc.Download(id="download-table-data"),
             
             # Sección de Dropdowns para filtros
             html.Div(
@@ -135,11 +134,6 @@ def layout_summary():
                                         end_date_placeholder_text="End Date",
                                         display_format='DD-MM-YYYY',
                                     ),
-                                    html.Button(
-                                        "Descargar Datos",
-                                        id="download-button",
-                                        className="btn btn-primary mt-2"
-                                    )
                                 ],
                                 className="mb-4",
                                 style={"display": "flex", "justify-content": "space-between"}
