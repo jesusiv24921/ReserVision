@@ -144,8 +144,8 @@ def layout_summary():
                                 id='qo-data-table',
                                 columns=[
                                     {'name': 'Fecha', 'id': 'FECHA'},
-                                    {'name': 'Tasa de Aceite (qo)', 'id': 'qo'},
-                                    {'name': 'Tasa de Líquidos (ql)', 'id': 'ql'},
+                                    {'name': 'Tasa de Aceite (BOPD)', 'id': 'qo'},
+                                    {'name': 'Tasa de Líquidos (BLPD)', 'id': 'ql'},
                                     {'name': 'BSW (%)', 'id': 'Wcut'}
                                 ],
                                 data=[],  # Los datos se actualizarán dinámicamente

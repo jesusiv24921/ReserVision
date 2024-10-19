@@ -134,11 +134,11 @@ def update_patron(selected_inyectores, selected_productores, selected_ubicacion,
         )
 
         # Configurar los ejes
-        fig.update_yaxes(title_text="bbl/día", row=1, col=1, secondary_y=False, titlefont=dict(size=14), showgrid=True, gridcolor='lightgray', type='log', gridwidth=1, tickvals=[1,100, 1000, 10000])
+        fig.update_yaxes(title_text="BPD", row=1, col=1, secondary_y=False, titlefont=dict(size=14), showgrid=True, gridcolor='lightgray', type='log', gridwidth=1, tickvals=[1,100, 1000, 10000])
         fig.update_yaxes(title_text="%", row=1, col=1, secondary_y=True, titlefont=dict(size=14), showgrid=False)
         fig.update_yaxes(title_text="Pwf (psi)", row=2, col=1, titlefont=dict(size=14), showgrid=True, gridcolor='lightgray')
         fig.update_yaxes(title_text="Conteo Pozos", row=2, col=1, titlefont=dict(size=14), showgrid=False, gridcolor='lightgray', secondary_y=True)
-        fig.update_yaxes(title_text="QWI (bbl/día)", row=3, col=1, secondary_y=False, titlefont=dict(size=14), showgrid=True, gridcolor='lightgray')
+        fig.update_yaxes(title_text="QWI (BWIPD)", row=3, col=1, secondary_y=False, titlefont=dict(size=14), showgrid=True, gridcolor='lightgray')
         fig.update_yaxes(title_text="PWI/Presión (psi)", row=3, col=1, secondary_y=True, titlefont=dict(size=14), showgrid=False)
 
         return fig, qo_data
@@ -187,7 +187,7 @@ def update_boxplot(qo_data, start_date, end_date):
         plot_bgcolor='white',  # Fondo del área de trazado
         paper_bgcolor='white',  # Fondo general del gráfico
         xaxis_title='Fecha',
-        yaxis_title='Tasa de Aceite (qo)',
+        yaxis_title='Tasa de Aceite (BOPD)',
         showlegend=False
     )
 
